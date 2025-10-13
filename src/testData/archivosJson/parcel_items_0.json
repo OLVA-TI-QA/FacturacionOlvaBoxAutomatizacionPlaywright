@@ -1,0 +1,25 @@
+{
+  "countryManufacture": "PE",
+  "logisticsCode": "PEGLOG-98XZ561234",
+  "currency": "USD",
+  "grossWeight": "8.120",
+  "packageCount": "5",
+  "purchaseWebsite": "https://shop.example.cn/product/ABC123",
+  "valueAddedTax": "12.300",
+  "ctnNumber": "12341234123412341",
+  "shipping": "35.500",
+  "invoiceNumber": "1234",
+  "wayBillNo": "TIFA252605",
+  "insurance": "48.75",
+  "receiverInfo": {
+    "address": "Jr. Los Pinos 451, Surco",
+    "email": "recep@ejemplo.pe",
+    "fullName": "Gabriel Alessandro Benites",
+    "mobilePhone": "987654321",
+    "idUbigeo": "432",
+    "zipCode": "15067",
+    "identityNumber": "44556678"
+  },
+  "itemList": [
+  ]
+}

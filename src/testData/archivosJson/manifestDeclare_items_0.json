@@ -1,0 +1,13 @@
+{
+  "masterAirWayBill": "MAWB1234567890",
+  "flightNumber": "AV1234",
+  "declareCountry": "PE",
+  "etd": "2025-10-01T08:00Z",
+  "eta": "2025-10-02T14:30Z",
+  "fromPortCode": "LIM",
+  "toPortCode": "MIA",
+  "virTotalCount": null,
+  "groosWeight": "1500.500",
+  "paqueteInfo": "Información extendida de paquetes en formato JSON o CLOB",
+  "parcelList": []
+}
