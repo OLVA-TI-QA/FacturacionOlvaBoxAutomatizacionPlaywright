@@ -17,56 +17,8 @@ export enum testType {
     CeroItemsList
 }
 
-export interface ParcelDeclareRequestBody {
-    countryManufacture: string | null;
-    logisticsCode: string | null;
-    currency: string | null;
-    grossWeight: string | null;
-    packageCount: string | null;
-    purchaseWebsite: string | null;
-    valueAddedTax: string | null;
-    shipping: string | null;
-    ctnNumber?: string | null;
-    invoiceNumber: string | null;
-    wayBillNo: string | null;
-    insurance?: string | null;
-    receiverInfo: Info | null;
-    senderInfo?: Info | null;
-    returnInfo?: Info | null;
-    itemList: ItemList[] | null;
-}
-
-export interface ItemList {
-    currency: string | null;
-    itemSequenceNumber: string | null;
-    descriptionGoods: string | null;
-    price: string | null;
-    qty: string | null;
-    grossWeight: string | null;
-    brand: string | null;
-    model: string | null;
-    productUrl: string | null;
-}
-
-export interface Info {
-    address: string | null;
-    email: string | null;
-    fullName: string | null;
-    mobilePhone: string | null;
-    idUbigeo: string | null;
-    zipCode: string | null;
-    identityNumber: string | null;
-}
-
-export interface ExportConfig<T> {
-    data: T[]
-    nombreBase: string
-    headers: string[]
-    nombreHoja?: string
-    extraerCampos: CampoExtractor<T>[]
-}
-
 export type CampoExtractor<T> = (item: T) => string | number | boolean | undefined
+
 
 export interface ExcelValidacionExportParcelDeclare {
     idTestCase: string
@@ -77,34 +29,94 @@ export interface ExcelValidacionExportParcelDeclare {
     bodyResponseObtenido: string
     bodyResponseEsperadoCorrecto: boolean
     mensajeErrorObtenido: string
-    wayBillNo: string
-    tiempoRespuestaToken?: number  // Tiempo en segundos
-    tiempoRespuestaParcel?: number // Tiempo en segundos
+    tiempoRespuestaParcel?: number // Tiempo en segundos
 }
 
-export interface LastMileRequestBody {
-    fullName: string | null;
-    address: string | null;
-    email: string | null;
-    mobilePhone: string | null;
-    idUbigeo: string | null;
-    zipCode: string | null;
-}
+    export interface saveComprobanteRequest {
+        createUser:              string | null | number;
+        idTipoComprobante:       string | null;
+        serieComprobante:        string | null;
+        idDocCliente:            string | null;
+        fechaEmision:            string | null;
+        valorVenta:              string | null;
+        valorIgv:                string | null;
+        precioVenta:             string | null;
+        idMoneda:                string | null;
+        igv:                     string | null;
+        baseImponible:           string | null;
+        importeOperacionGravada: string | null;
+        collect:                 number;
+        estado:                  number;
+        fechaAnulacion:          string;
+        observacion:             string;
+        idOficina:               string | null;
+        pc:                      string;
+        efectivo:                number;
+        idPersJurArea:           string | null;
+        flgFacturaElectronica:   string | null;
+        flgDivEmi:               string | null;
+        glosaDivEmi:             string | null;
+        estadoFacE:              number;
+        idTipoComprobanteFe:     string | null;
+        idTipoNota:              string;
+        motivoNota:              string;
+        fechaVencimiento:        Date;
+        idTipoAfectacionIgv:     string | null;
+        idFormaPago:             string | null;
+        idVoucher:               null;
+        idEmisorComp:            string | null;
+        idTipoServicio:          number;
+        glosa:                   string;
+        importeDetraccion:       number;
+        importePenalidad:        string;
+        observacionVoucher:      string;
+        idTipoCancelacion:       number;
+        importeAutodetraccion:   number;
+        nombreCliente:           string;
+        direccionCliente:        string;
+        montoNetoPago:           number;
+        idDetraccion:            number;
+        comprobante:             Comprobante;
+        idMedioPagoDetraccion:   number;
+        idTipoOperacionSunat:    number;
+        idTipoDetalle:           number;
+        detalle:                 Detalle[];
+    }
 
-export interface ManifestDeclareRequestBody {
-    masterAirWayBill: string | null;
-    flightNumber: string | null;
-    declareCountry: string | null;
-    etd: string | null;
-    eta: string | null;
-    fromPortCode: string | null;
-    toPortCode: string | null;
-    virTotalCount: string | null;
-    groosWeight: string | null;
-    paqueteInfo: string | null;
-    parcelList: ParcelList[] | null;
-}
+    export interface Comprobante {
+        tipoOperacionId:                                string | null;
+        serie:                                          string | null;
+        numero:                                         number;
+        issueDate:                                      Date;
+        issueTime:                                      string | null;
+        invoiceTypeCode:                                string | null;
+        moneda:                                         string | null;
+        signatureID:                                    string | null;
+        ruc:                                            string | null;
+        razonSocial:                                    string | null;
+        nombreComercial:                                string | null;
+        tipoClie:                                       string | null;
+        rucClie:                                        string | null;
+        razonSocialClie:                                string | null;
+        digitalSignatureAttachmentExternalReferenceURI: string | null;
+        taxAmount:                                      string | null;
+        totalDet:                                       number;
+        valorVentaBruto:                                string | null;
+        precioVenta:                                    string | null;
+        importeTotal:                                   string | null;
+        formaPago:                                      string | null;
+        codigoAnexo:                                    string | null;
+    }
 
-export interface ParcelList {
-    wayBillNo: string | null;
+    export interface Detalle {
+        id: string | null;
+    }
+
+
+export interface ExportConfig<T> {
+    data: T[]
+    nombreBase: string
+    headers: string[]
+    nombreHoja?: string
+    extraerCampos: CampoExtractor<T>[]
 }

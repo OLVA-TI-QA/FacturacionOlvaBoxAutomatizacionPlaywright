@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test'
 import { procesarValorCeldaExcel, validarDatosExcel } from '@/utils/validadores'
 import { exportarResultadosGenerico, generateRandomAWB, leerDatosDesdeExcel } from '@/utils/helpers'
-import { ExcelValidacionExportParcelDeclare, ParcelDeclareRequestBody, tokenType } from '@/types/Interfaces'
-import { CrossBorderRest } from '@/apiProviders/crossborderRest'
+import { ExcelValidacionExportParcelDeclare, saveComprobanteRequest, tokenType } from '@/types/Interfaces'
+import { ComprobantePagoRest } from '@/apiProviders/comprobantePagoRest'
 
-test.describe('Pruebas de la API de Parcel Declare con Excel', () => {
-    let crossBorderRest: CrossBorderRest
+test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
+    let comprobantePagoRest: ComprobantePagoRest;
 
     // Ruta y nombre de la hoja de Excel
-    const excelPath = './src/testData/archivosExcel/ParcelDeclareRequest_v2.xlsx'
+    const excelPath = './src/testData/archivosExcel/.xlsx'
     const sheetName = 'BodyRequest'
 
     // Define el tamaño de cada lote de peticiones
@@ -16,8 +16,8 @@ test.describe('Pruebas de la API de Parcel Declare con Excel', () => {
 
     // Setup de provider before all test
     test.beforeEach(async () => {
-        const currentEnvioRest = new CrossBorderRest()
-        crossBorderRest = await currentEnvioRest.init()
+        const currentEnvioRest = new ComprobantePagoRest()
+        comprobantePagoRest = await currentEnvioRest.init()
     })
 
     // Test principal con múltiples envíos
@@ -32,26 +32,6 @@ test.describe('Pruebas de la API de Parcel Declare con Excel', () => {
 
         const resultadosValidacion: ExcelValidacionExportParcelDeclare[] = []
 
-        // Medir tiempo de respuesta del token
-        const tiempoInicioToken = performance.now()
-        const getTokenResponse = await crossBorderRest.postToken(tokenType.Eduardo)
-        const tiempoFinToken = performance.now()
-        const tiempoRespuestaTokenMs = tiempoFinToken - tiempoInicioToken
-        const tiempoRespuestaToken = tiempoRespuestaTokenMs / 1000 // Convertir a segundos
-        console.log(`⏱️  Tiempo de respuesta del token: ${tiempoRespuestaToken.toFixed(3)}s (${tiempoRespuestaTokenMs.toFixed(2)}ms)`)
-
-        expect(getTokenResponse.status()).toBe(200)
-        expect(getTokenResponse.json()).resolves.toMatchObject({
-            access_token: expect.any(String),
-            token_type: 'Bearer'
-        })
-        console.log(getTokenResponse.json())
-
-        const authBody = await getTokenResponse.json()
-        const token = authBody.access_token
-        expect(token).toBeDefined()
-        console.log(`🔐 Token obtenido: ${token}`)
-
         // 2. Iterar los datos en lotes para procesar peticiones con concurrencia limitada
         for (let i = 0; i < datos.length; i += BATCH_SIZE) {
             const batch = datos.slice(i, i + BATCH_SIZE)
@@ -63,113 +43,81 @@ test.describe('Pruebas de la API de Parcel Declare con Excel', () => {
             const requestsToSendForBatch = batch.map(async (fila: any) => {
                 // Ajusta los nombres de las columnas a como estén en tu Excel
                 const idTestCase = fila['idTestCase']
-                const countryManufacture = procesarValorCeldaExcel(fila['countryManufacture'])
-                const logisticsCode = procesarValorCeldaExcel(fila['logisticsCode'])
-                const currency = procesarValorCeldaExcel(fila['currency'])
-                const grossWeight = procesarValorCeldaExcel(fila['grossWeight'])
-                const packageCount = procesarValorCeldaExcel(fila['packageCount'])
-                const purchaseWebsite = procesarValorCeldaExcel(fila['purchaseWebsite'])
-                const valueAddedTax = procesarValorCeldaExcel(fila['valueAddedTax'])
-                const shipping = procesarValorCeldaExcel(fila['shipping'])
-                const ctnNumber = procesarValorCeldaExcel(fila['ctnNumber'])
-                const invoiceNumber = procesarValorCeldaExcel(fila['invoiceNumber'])
-                const wayBillNoValue = procesarValorCeldaExcel(fila['wayBillNo'])
-                const wayBillNo = wayBillNoValue !== null || '' ? generateRandomAWB() : wayBillNoValue
-                const insurance = procesarValorCeldaExcel(fila['insurance'])
-                const receiverInfoAddress = procesarValorCeldaExcel(fila['receiverInfo-address'])
-                const receiverInfoEmail = procesarValorCeldaExcel(fila['receiverInfo-email'])
-                const receiverInfoFullName = procesarValorCeldaExcel(fila['receiverInfo-fullName'])
-                const receiverInfoMobilePhone = procesarValorCeldaExcel(fila['receiverInfo-mobilePhone'])
-                const receiverInfoIdUbigeo = procesarValorCeldaExcel(fila['receiverInfo-idUbigeo'])
-                const receiverInfoZipCode = procesarValorCeldaExcel(fila['receiverInfo-zipCode'])
-                const receiverInfoIdentityNumber = procesarValorCeldaExcel(fila['receiverInfo-identityNumber'])
-                const itemListUnoCurrency = procesarValorCeldaExcel(fila['itemList-uno-currency'])
-                const itemListUnoItemSequenceNumber = procesarValorCeldaExcel(fila['itemList-uno-itemSequenceNumber'])
-                const itemListUnoDescriptionGoods = procesarValorCeldaExcel(fila['itemList-uno-descriptionGoods'])
-                const itemListUnoPrice = procesarValorCeldaExcel(fila['itemList-uno-price'])
-                const itemListUnoQty = procesarValorCeldaExcel(fila['itemList-uno-qty'])
-                const itemListUnoGrossWeight = procesarValorCeldaExcel(fila['itemList-uno-grossWeight'])
-                const itemListUnoBrand = procesarValorCeldaExcel(fila['itemList-uno-brand'])
-                const itemListUnoModel = procesarValorCeldaExcel(fila['itemList-uno-model'])
-                const itemListUnoProductUrl = procesarValorCeldaExcel(fila['itemList-uno-productUrl'])
-                const itemListDosCurrency = procesarValorCeldaExcel(fila['itemList-dos-currency'])
-                const itemListDosItemSequenceNumber = procesarValorCeldaExcel(fila['itemList-dos-itemSequenceNumber'])
-                const itemListDosDescriptionGoods = procesarValorCeldaExcel(fila['itemList-dos-descriptionGoods'])
-                const itemListDosPrice = procesarValorCeldaExcel(fila['itemList-dos-price'])
-                const itemListDosQty = procesarValorCeldaExcel(fila['itemList-dos-qty'])
-                const itemListDosGrossWeight = procesarValorCeldaExcel(fila['itemList-dos-grossWeight'])
-                const itemListDosBrand = procesarValorCeldaExcel(fila['itemList-dos-brand'])
-                const itemListDosModel = procesarValorCeldaExcel(fila['itemList-dos-model'])
-                const itemListDosProductUrl = procesarValorCeldaExcel(fila['itemList-dos-productUrl'])
-                const statusEsperado = fila['status']
+                const createUser = procesarValorCeldaExcel(fila['createUser'])
+                const idTipoComprobante = procesarValorCeldaExcel(fila['idTipoComprobante'])
+                const serieComprobante = procesarValorCeldaExcel(fila['serieComprobante'])
+                const idDocCliente = procesarValorCeldaExcel(fila['idDocCliente'])
+                const fechaEmision = procesarValorCeldaExcel(fila['fechaEmision'])
+                const valorVenta = procesarValorCeldaExcel(fila['valorVenta'])
+                const valorIgv = procesarValorCeldaExcel(fila['valorIgv'])
+                const precioVenta = procesarValorCeldaExcel(fila['precioVenta'])
+                const idMoneda = procesarValorCeldaExcel(fila['idMoneda'])
+                const igv = procesarValorCeldaExcel(fila['igv'])
+                const baseImponible = procesarValorCeldaExcel(fila['baseImponible'])
+                const importeOperacionGravada = procesarValorCeldaExcel(fila['importeOperacionGravada'])
+                const idOficina = procesarValorCeldaExcel(fila['idOficina'])
+                const idPersJurArea = procesarValorCeldaExcel(fila['idPersJurArea'])
+                const flgFacturaElectronica = procesarValorCeldaExcel(fila['flgFacturaElectronica'])
+                const flgDivEmi = procesarValorCeldaExcel(fila['flgDivEmi'])
+                const idTipoComprobanteFe = procesarValorCeldaExcel(fila['idTipoComprobanteFe'])
+                const idTipoAfectacionIgv = procesarValorCeldaExcel(fila['idTipoAfectacionIgv'])
+                const idFormaPago = procesarValorCeldaExcel(fila['idFormaPago'])
+                const idEmisorComp = procesarValorCeldaExcel(fila['idEmisorComp'])
+                const comprobante = procesarValorCeldaExcel(fila['comprobante'])
+                const detalle = procesarValorCeldaExcel(fila['detalle'])
+                const idTipoNota = procesarValorCeldaExcel(fila['idTipoNota'])
+                const motivoNota = procesarValorCeldaExcel(fila['motivoNota'])
+                const fechaVencimiento = procesarValorCeldaExcel(fila['fechaVencimiento'])
+                const importeDetraccion = procesarValorCeldaExcel(fila['importeDetraccion'])
+                const montoNetoPago = procesarValorCeldaExcel(fila['montoNetoPago'])
+                const idDetraccion = procesarValorCeldaExcel(fila['idDetraccion'])
+                const idMedioPagoDetraccion = procesarValorCeldaExcel(fila['idMedioPagoDetraccion'])
+                const observacion = procesarValorCeldaExcel(fila['observacion'])
                 const bodyResponseEsperado = fila['bodyResponse']
 
-                const body: ParcelDeclareRequestBody = {
-                    countryManufacture,
-                    logisticsCode,
-                    currency,
-                    grossWeight,
-                    packageCount,
-                    purchaseWebsite,
-                    valueAddedTax,
-                    shipping,
-                    ctnNumber,
-                    invoiceNumber,
-                    wayBillNo,
-                    insurance,
-                    receiverInfo: {
-                        address: receiverInfoAddress,
-                        email: receiverInfoEmail,
-                        fullName: receiverInfoFullName,
-                        mobilePhone: receiverInfoMobilePhone,
-                        idUbigeo: receiverInfoIdUbigeo,
-                        zipCode: receiverInfoZipCode,
-                        identityNumber: receiverInfoIdentityNumber
-                    },
-                    itemList: [
-                        {
-                            currency: itemListUnoCurrency,
-                            itemSequenceNumber: itemListUnoItemSequenceNumber,
-                            descriptionGoods: itemListUnoDescriptionGoods,
-                            price: itemListUnoPrice,
-                            qty: itemListUnoQty,
-                            grossWeight: itemListUnoGrossWeight,
-                            brand: itemListUnoBrand,
-                            model: itemListUnoModel,
-                            productUrl: itemListUnoProductUrl
-                        },
-                        {
-                            currency: itemListDosCurrency,
-                            itemSequenceNumber: itemListDosItemSequenceNumber,
-                            descriptionGoods: itemListDosDescriptionGoods,
-                            price: itemListDosPrice,
-                            qty: itemListDosQty,
-                            grossWeight: itemListDosGrossWeight,
-                            brand: itemListDosBrand,
-                            model: itemListDosModel,
-                            productUrl: itemListDosProductUrl
-                        }
-                    ]
+                const body: saveComprobanteRequest = {
+                    createUser,
+                    idTipoComprobante,
+                    serieComprobante,
+                    idDocCliente,
+                    fechaEmision,
+                    valorVenta,
+                    valorIgv,
+                    precioVenta,
+                    idMoneda,
+                    igv,
+                    baseImponible,
+                    importeOperacionGravada,
+                    idOficina,
+                    idPersJurArea,
+                    flgFacturaElectronica,
+                    flgDivEmi,
+                    idTipoComprobanteFe,
+                    idTipoAfectacionIgv,
+                    idFormaPago,
+                    idEmisorComp,
+                    comprobante,
+                    detalle,
                 }
 
                 console.log(`Preparando solicitud para testcase: ${idTestCase}`)
 
-                // Medir tiempo de respuesta del parcel
-                const tiempoInicioParcel = performance.now()
-                const response = await crossBorderRest.postCrearParcelMasivo(token, body)
-                const tiempoFinParcel = performance.now()
-                const tiempoRespuestaParcelMs = tiempoFinParcel - tiempoInicioParcel
-                const tiempoRespuestaParcel = tiempoRespuestaParcelMs / 1000 // Convertir a segundos
+                // Medir tiempo de respuesta del Manifest
+                const tiempoInicioManifest = performance.now()
+                const response = await comprobantePagoRest.saveComprobanteRequest(body)
+                const tiempoFinManifest = performance.now()
+                const tiempoRespuestaManifestMs = tiempoFinManifest - tiempoInicioManifest
+                const tiempoRespuestaManifest = tiempoRespuestaManifestMs / 1000 // Convertir a segundos
 
                 // Retornamos la respuesta y algunos datos adicionales para la validación
-                return { response, idTestCase, statusEsperado, bodyResponseEsperado, wayBillNo, tiempoRespuestaParcel }
+                return { response, idTestCase, statusEsperado, bodyResponseEsperado, tiempoRespuestaManifest }
             })
 
             // Ejecutar todas las promesas del lote en paralelo y esperar a que terminen
             const responsesInBatch = await Promise.all(requestsToSendForBatch)
 
             // 3. Procesar y validar cada respuesta del lote
-            for (const { response, idTestCase, statusEsperado, bodyResponseEsperado, wayBillNo, tiempoRespuestaParcel } of responsesInBatch) {
+            for (const { response, idTestCase, statusEsperado, bodyResponseEsperado, tiempoRespuestaManifest } of responsesInBatch) {
                 const bodyResponse = await response.json()
 
                 console.log(`Response for testcase ${idTestCase}:`, bodyResponse)
@@ -211,7 +159,6 @@ test.describe('Pruebas de la API de Parcel Declare con Excel', () => {
                 let statusCorrecto: boolean
                 let bodyResponseEsperadoCorrecto: boolean
                 let mensajeErrorObtenido: string = ''
-                let wayBillNoObtenido: string = ''
 
                 const statusObtenido = response.status()
 
@@ -227,7 +174,6 @@ test.describe('Pruebas de la API de Parcel Declare con Excel', () => {
                             }
 
                             mensajeErrorObtenido = bodyResponse.message
-                            wayBillNoObtenido = wayBillNo ?? 'No se creo Parcel'
                             break
                         default:
                             if (normalizeForComparison(bodyResponse) === normalizeForComparison(JSON.parse(bodyResponseEsperado))) {
@@ -237,15 +183,13 @@ test.describe('Pruebas de la API de Parcel Declare con Excel', () => {
                             }
 
                             mensajeErrorObtenido = bodyResponse.message
-                            wayBillNoObtenido = 'No se creo Parcel'
                             break
                     }
                 } else {
-                    // Si el status no es 200, asumimos que hay un error
+                    // Si el status no es 201, asumimos que hay un error
                     statusCorrecto = false
                     bodyResponseEsperadoCorrecto = false
                     mensajeErrorObtenido = bodyResponse.message
-                    wayBillNoObtenido = wayBillNo ?? 'No se creo Parcel'
                     console.log(`Error obtenido para la fila con ID Test Case ${idTestCase}: ${statusObtenido} - ${mensajeErrorObtenido}`)
                 }
 
@@ -258,13 +202,11 @@ test.describe('Pruebas de la API de Parcel Declare con Excel', () => {
                     bodyResponseObtenido: JSON.stringify(bodyResponse),
                     bodyResponseEsperadoCorrecto: bodyResponseEsperadoCorrecto,
                     mensajeErrorObtenido: mensajeErrorObtenido,
-                    wayBillNo: wayBillNoObtenido,
-                    tiempoRespuestaToken: tiempoRespuestaToken,
-                    tiempoRespuestaParcel: tiempoRespuestaParcel
+                    tiempoRespuestaParcel: tiempoRespuestaManifest
                 })
 
                 console.log(
-                    `✅ Fila procesada: ID testcase ${idTestCase} - Status Correcto?: ${statusCorrecto} - Body Response Correcto?: ${bodyResponseEsperadoCorrecto} - Tiempo Token: ${tiempoRespuestaToken.toFixed(3)}s - Tiempo Parcel: ${tiempoRespuestaParcel.toFixed(3)}s`
+                    `✅ Fila procesada: ID testcase ${idTestCase} - Status Correcto?: ${statusCorrecto} - Body Response Correcto?: ${bodyResponseEsperadoCorrecto} - Tiempo Manifest: ${tiempoRespuestaManifest.toFixed(3)}s`
                 )
             }
         } // Fin del bucle de lotes
@@ -288,7 +230,7 @@ test.describe('Pruebas de la API de Parcel Declare con Excel', () => {
 
         exportarResultadosGenerico<ExcelValidacionExportParcelDeclare>({
             data: resultadosValidacion,
-            nombreBase: 'resultados_validacion_estructura_body_request_parcel',
+            nombreBase: 'resultados_validacion_estructura_body_request_manifest',
             headers: [
                 'ID TESTCASE',
                 'STATUS ESPERADO',
@@ -298,9 +240,7 @@ test.describe('Pruebas de la API de Parcel Declare con Excel', () => {
                 'BODY RESPONSE OBTENIDO',
                 'EL BODY RESPONSE ES CORRECTO?',
                 'MENSAJE OBTENIDO',
-                'PARCEL CREADO',
-                'TIEMPO RESPUESTA TOKEN (s)',
-                'TIEMPO RESPUESTA PARCEL (s)'
+                'TIEMPO RESPUESTA MANIFEST (s)'
             ],
             extraerCampos: [
                 (r) => r.idTestCase,
@@ -311,8 +251,6 @@ test.describe('Pruebas de la API de Parcel Declare con Excel', () => {
                 (r) => r.bodyResponseObtenido,
                 (r) => (r.bodyResponseEsperadoCorrecto ? 'Sí' : 'No'),
                 (r) => r.mensajeErrorObtenido,
-                (r) => r.wayBillNo,
-                (r) => r.tiempoRespuestaToken ?? 0,
                 (r) => r.tiempoRespuestaParcel ?? 0
             ]
         })
