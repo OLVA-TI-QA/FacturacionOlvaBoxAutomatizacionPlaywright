@@ -75,7 +75,7 @@ export interface EnvironmentConfig {
   testSuite: string;
 
   // API configuration
-  apiBaseUrlCrossborderDev: string;
+  facturacionOlvaBox: string;
 
 
   //tokens
@@ -134,6 +134,5 @@ export const environment: EnvironmentConfig = {
   environment: process.env.ENVIRONMENT || 'development', // is obtained from the .env file
   testSuite: process.env.TEST_SUITE || 'smoke',
 
-  apiBaseUrlCrossborderDev: process.env.API_BASE_URL_CROSSBORDER_DEV || '', // is obtained from the .env file
-  // geoXApiKey: process.env.GEO_X_API_KEY || ''
+  facturacionOlvaBox: process.env.FACTURACION_OLVABOX || '',
 };
