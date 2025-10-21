@@ -33,95 +33,143 @@ export interface ExcelValidacionExportParcelDeclare {
 }
 
 export interface saveComprobanteRequest {
-    createUser: number | null;
-    idTipoComprobante: string | null;
-    serieComprobante: string | null;
-    idDocCliente: string | null;
-    fechaEmision: string | null;
-    valorVenta: string | null;
-    valorIgv: string | null;
-    precioVenta: string | null;
-    idMoneda: string | null;
-    igv: string | null;
-    baseImponible: string | null;
-    importeOperacionGravada: string | null;
-    collect: number | null;
-    estado: number | null;
-    fechaAnulacion: string | null;
-    observacion: string | null;
-    idOficina: string | null;
-    pc: string | null;
-    efectivo: number | null;
-    idPersJurArea: string | null;
-    flgFacturaElectronica: string | null;
-    flgDivEmi: string | null;
-    glosaDivEmi: string | null;
-    estadoFacE: number | null;
-    idTipoComprobanteFe: string | null;
-    idTipoNota: string | null;
-    motivoNota: string | null;
-    fechaVencimiento: string | null;
-    idTipoAfectacionIgv: string | null;
-    idFormaPago: string | null;
-    idVoucher: string | null;
-    idEmisorComp: string | null;
-    idTipoServicio: number | null;
-    glosa: string | null;
-    importeDetraccion: number | null;
-    importePenalidad: string | null;
-    observacionVoucher: string | null;
-    idTipoCancelacion: number | null;
-    importeAutodetraccion: number | null;
-    nombreCliente: string | null;
-    direccionCliente: string | null;
-    montoNetoPago: number | null;
-    idDetraccion: number | null;
-    comprobante: Comprobante | null;
-    idMedioPagoDetraccion: number | null;
-    idTipoOperacionSunat: number | null;
-    idTipoDetalle: number | null;
-    serie: string | null;
-    detalle: Detalle[] | null;
-    formaPago: string | null;
-    issueDate: string | null;
-    tipoOperacionId: string | null;
-    signatureID: string | null;
-    numero: number | null;
-    issueTime: string | null;
-    invoiceTypeCode: string | null;
-    moneda: string | null;
-    ruc: string | null;
-    razonSocial: string | null;
-    nombreComercial: string | null;
-    tipoClie: string | null;
-    rucClie: string | null;
-    razonSocialClie: string | null;
-    digitalSignatureAttachmentExternalReferenceURI: string | null;
-    taxAmount: string | null;
-    totalDet: string | null;
-    valorVentaBruto: string | null;
-    importeTotal: string | null;
-    codigoAnexo: string | null;
-    leyendasid:    string | null;
-    valueLeyendas: string | null;
-    schemaCode: string | null;
-    invoiceLineDescription: string | null;
-    unitCode: string | null,
-    InvoiceLinePorcentaje: string | null,
-    schemeId: string | null,
-    schemaName: string | null,
-    invioceLineCodigo: string | null,
-
+    fechaEmision?: string | null;
+    idPersJurArea?: number | string | null;
+    idOficina?: number | string | null;
+    idEmisorComp?: number | string | null;
+    pc?: string | null;
+    glosaDivEmi?: string | null;
+    collect?: string | null;
+    flgDivEmi?: string | null;
+    flgFacturaElectronica?: string | null;
+    igv?: number | string | null;
+    efectivo?: number | string | null;
+    precioVenta?: number | string | null;
+    valorIgv?: number | string | null;
+    valorVenta?: number | string | null;
+    baseImponible?: number | string | null;
+    idTipoComprobante?: number | string | null;
+    idDocCliente?: number | string | null;
+    serieComprobante?: string | null;
+    moneda?: string | null;
+    estadoResumenComp?: string | null;
+    idTipoServicio?: number | string | null;
+    estado?: number | string | null;
+    estadoFacE?: number | string | null;
+    idFormaPago?: number | string | null;
+    createUser?: number | string | null;
+    createDatetime?: string | null;
+    comprobante?: Comprobante | null;
+    idMoneda?: number | string | null;
+    importeOperacionGravada?: number | string | null;
+    observacion?: null;
+    idTipoComprobanteFe?: number | string | null;
+    idTipoNota?: null;
+    motivoNota?: null;
+    fechaVencimiento?: null;
+    idTipoAfectacionIgv?: number | string | null;
+    idVoucher?: null;
+    glosa?: null;
+    importeDetraccion?: number | string | null;
+    importePenalidad?: null;
+    observacionVoucher?: null;
+    idTipoCancelacion?: null;
+    importeAutodetraccion?: null;
+    nombreCliente?: null;
+    direccionCliente?: null;
+    montoNetoPago?: number | string | null;
+    idDetraccion?: number | string | null;
+    idMedioPagoDetraccion?: number | string | null;
+    idTipoOperacionSunat?: number | string | null;
+    detalle?: Detalle[] | null;
 }
 
 export interface Comprobante {
-    
+    tipoOperacionId?: string | null;
+    serie?: string | null;
+    numero?: null;
+    issueDate?: string | null;
+    dueDate?: null;
+    issueTime?: string | null;
+    invoiceTypeCode?: string | null;
+    moneda?: string | null;
+    signatureID?: string | null;
+    ruc?: string | null;
+    razonSocial?: string | null;
+    nombreComercial?: null;
+    addressTypeCode?: null;
+    tipoClie?: string | null;
+    rucClie?: string | null;
+    razonSocialClie?: string | null;
+    digitalSignatureAttachmentExternalReferenceURI?: string | null;
+    taxAmount?: string | null;
+    totalDet?: number | string | null;
+    valorVentaBruto?: string | null;
+    precioVenta?: string | null;
+    totalDescuento?: null;
+    importeTotal?: string | null;
+    otrosCargos?: null;
+    formaPago?: string | null;
+    montoPendiente?: null;
+    montoTotal?: null;
+    fechaVencimiento?: null;
+    notaCreditoEspecial?: null;
+    codigoAnexo?: string | null;
+    leyendas?: Leyenda[] | null;
+    taxSubTotal?: TaxSubTotal[] | null;
+    invoiceLine?: InvoiceLine[] | null;
+    ordenCompra?: null;
+    codigoBienServicioDetraccion?: string | null;
+    numeroCuentaDetraccion?: string | null;
+    codigoMedioPagoDetraccion?: string | null;
+    porcentajeDetraccion?: string | null;
+    importeDetraccion?: string | null;
+}
+
+export interface InvoiceLine {
+    id?: number | string | null;
+    unitCode?: string | null;
+    cantidad?: string | null;
+    valorVenta?: string | null;
+    precioUnitario?: string | null;
+    precioUnitCodigo?: string | null;
+    valorUnitario?: string | null;
+    taxAmount?: string | null;
+    descripcion?: string | null;
+    codigo?: string | null;
+    taxSubTotal?: TaxSubTotal[] | null;
+}
+
+export interface TaxSubTotal {
+    taxableAmount?: string | null;
+    taxAmount?: string | null;
+    categoryId?: string | null;
+    porcentaje?: string | null;
+    exemptionCode?: string | null;
+    schemeId?: string | null;
+    schemaName?: string | null;
+    schemaCode?: string | null;
 }
 
 export interface Detalle {
-    id: string | null;
+    id?: string | null;
+    emision?: string | null;
+    remito?: string | null;
+    valorVenta?: string | null;
+    valorIgv?: string | null;
+    precioVenta?: string | null;
+    pesoKgs?: string | null;
+    codSede?: string | null;
+    nombreServicio?: string | null;
+    codigoServicio?: string | null;
+    idTipoAfectacion?: string | null;
+    valorAfectacion?: string | null;
 }
 
+export interface Leyenda {
+    id?: string | null;
+    value?: string | null;
+}
 
 export interface ExportConfig<T> {
     data: T[]
