@@ -8,11 +8,11 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
     let comprobantePagoRest: ComprobantePagoRest
 
     // Ruta y nombre de la hoja de Excel
-    const excelPath = './src/testData/archivosExcel/.xlsx'
+    const excelPath = './src/testData/archivosExcel/comprobantePagoRequest.xlsx'
     const sheetName = 'BodyRequest'
 
     // Define el tamaño de cada lote de peticiones
-    const BATCH_SIZE = 15
+    const BATCH_SIZE = 20
 
     // Setup de provider before all test
     test.beforeEach(async () => {
@@ -23,7 +23,7 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
     // Test principal con múltiples envíos
     test('Enviar peticiones con valores no válidos y validar respuestas correctas', async () => {
         // Aumenta el tiempo de espera a 120 segundos (120000ms)
-        test.setTimeout(120000)
+        test.setTimeout(240000)
 
         // Paso 1: Leer Excel
         const datos = leerDatosDesdeExcel(excelPath, sheetName)
@@ -116,11 +116,105 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
                     ? JSON.parse(detalleData) as Detalle[]
                     : null
 
-                const statusEsperadoData = procesarValorCeldaExcel(fila['statusEsperado'])
+                const statusEsperadoData = procesarValorCeldaExcel(fila['status'])
                 const statusEsperado = typeof statusEsperadoData === 'number'
                     ? statusEsperadoData
                     : parseInt(statusEsperadoData as string) || 0
                 const bodyResponseEsperado = fila['bodyResponse']
+
+                const serie = typeof procesarValorCeldaExcel(fila['serie']) === 'string'
+                    ? procesarValorCeldaExcel(fila['serie']) as string
+                    : null
+                const formaPago = typeof procesarValorCeldaExcel(fila['formaPago']) === 'string'
+                    ? procesarValorCeldaExcel(fila['formaPago']) as string
+                    : null
+                const issueDate = typeof procesarValorCeldaExcel(fila['issueDate']) === 'string'
+                    ? procesarValorCeldaExcel(fila['issueDate']) as string
+                    : null
+                const idTipoNota = typeof procesarValorCeldaExcel(fila['idTipoNota']) === 'string'
+                    ? procesarValorCeldaExcel(fila['idTipoNota']) as string
+                    : null
+                const motivoNota = typeof procesarValorCeldaExcel(fila['motivoNota']) === 'string'
+                    ? procesarValorCeldaExcel(fila['motivoNota']) as string
+                    : null
+                const fechaVencimiento = typeof procesarValorCeldaExcel(fila['fechaVencimiento']) === 'string'
+                    ? procesarValorCeldaExcel(fila['fechaVencimiento']) as string
+                    : null
+                const importeDetraccion = typeof procesarValorCeldaExcel(fila['importeDetraccion']) === 'string'
+                    ? procesarValorCeldaExcel(fila['importeDetraccion']) as string
+                    : null
+
+                    const montoNetoPago = typeof procesarValorCeldaExcel(fila['montoNetoPago']) === 'string'
+                    ? procesarValorCeldaExcel(fila['montoNetoPago']) as string
+                    : null
+                const idDetraccion = typeof procesarValorCeldaExcel(fila['idDetraccion']) === 'string'
+                    ? procesarValorCeldaExcel(fila['idDetraccion']) as string
+                    : null
+                const idMedioPagoDetraccion = typeof procesarValorCeldaExcel(fila['idMedioPagoDetraccion']) === 'string'
+                    ? procesarValorCeldaExcel(fila['idMedioPagoDetraccion']) as string
+                    : null
+                const tipoOperacionId = typeof procesarValorCeldaExcel(fila['tipoOperacionId']) === 'string'
+                    ? procesarValorCeldaExcel(fila['tipoOperacionId']) as string
+                    : null
+                const signatureID = typeof procesarValorCeldaExcel(fila['signatureID']) === 'string'
+                    ? procesarValorCeldaExcel(fila['signatureID']) as string
+                    : null
+                const ruc = typeof procesarValorCeldaExcel(fila['ruc']) === 'string'
+                    ? procesarValorCeldaExcel(fila['ruc']) as string
+                    : null
+
+
+                const razonSocial = typeof procesarValorCeldaExcel(fila['razonSocial']) === 'string'
+                    ? procesarValorCeldaExcel(fila['razonSocial']) as string
+                    : null
+                const nombreComercial = typeof procesarValorCeldaExcel(fila['nombreComercial']) === 'string'
+                    ? procesarValorCeldaExcel(fila['nombreComercial']) as string
+                    : null
+                const razonSocialClie = typeof procesarValorCeldaExcel(fila['razonSocialClie']) === 'string'
+                    ? procesarValorCeldaExcel(fila['razonSocialClie']) as string
+                    : null
+                const totalDet = typeof procesarValorCeldaExcel(fila['totalDet']) === 'string'
+                    ? procesarValorCeldaExcel(fila['totalDet']) as string
+                    : null
+
+                const importeTotal = typeof procesarValorCeldaExcel(fila['importeTotal']) === 'string'
+                    ? procesarValorCeldaExcel(fila['importeTotal']) as string
+                    : null
+                const leyendasid = typeof procesarValorCeldaExcel(fila['leyendasid']) === 'string'
+                    ? procesarValorCeldaExcel(fila['leyendasid']) as string
+                    : null
+                const valueLeyendas = typeof procesarValorCeldaExcel(fila['valueLeyendas']) === 'string'
+                    ? procesarValorCeldaExcel(fila['valueLeyendas']) as string
+                    : null
+                const schemaCode = typeof procesarValorCeldaExcel(fila['schemaCode']) === 'string'
+                    ? procesarValorCeldaExcel(fila['schemaCode']) as string
+                    : null
+
+                const invoiceLineDescription = typeof procesarValorCeldaExcel(fila['invoiceLineDescription']) === 'string'
+                    ? procesarValorCeldaExcel(fila['invoiceLineDescription']) as string
+                    : null
+                const invioceLineCodigo = typeof procesarValorCeldaExcel(fila['invioceLineCodigo']) === 'string'
+                    ? procesarValorCeldaExcel(fila['invioceLineCodigo']) as string
+                    : null
+                const unitCode = typeof procesarValorCeldaExcel(fila['unitCode']) === 'string'
+                    ? procesarValorCeldaExcel(fila['unitCode']) as string
+                    : null
+                const InvoiceLinePorcentaje = typeof procesarValorCeldaExcel(fila['InvoiceLinePorcentaje']) === 'string'
+                    ? procesarValorCeldaExcel(fila['InvoiceLinePorcentaje']) as string
+                    : null
+
+                const schemeId = typeof procesarValorCeldaExcel(fila['schemeId']) === 'string'
+                    ? procesarValorCeldaExcel(fila['schemeId']) as string
+                    : null
+                const schemaName = typeof procesarValorCeldaExcel(fila['schemaName']) === 'string'
+                    ? procesarValorCeldaExcel(fila['schemaName']) as string
+                    : null
+                const idTipoOperacionSunat = typeof procesarValorCeldaExcel(fila['idTipoOperacionSunat']) === 'string'
+                    ? procesarValorCeldaExcel(fila['idTipoOperacionSunat']) as string
+                    : null
+                const observacion = typeof procesarValorCeldaExcel(fila['InvoiceLinePorobserobservacionvacioncentaje']) === 'string'
+                    ? procesarValorCeldaExcel(fila['observacion']) as string
+                    : null
 
                 const body: saveComprobanteRequest = {
                     createUser,
@@ -150,7 +244,7 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
                     idTipoComprobanteFe,
                     idTipoNota: null,
                     motivoNota: null,
-                    fechaVencimiento: new Date(),
+                    fechaVencimiento,
                     idTipoAfectacionIgv,
                     idFormaPago,
                     idVoucher: null,
@@ -171,6 +265,26 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
                     idTipoOperacionSunat: null,
                     idTipoDetalle: null,
                     detalle,
+                    serie,
+                    formaPago,
+                    issueDate,
+                    tipoOperacionId,
+                    signatureID,
+                    ruc,
+                    razonSocial,
+                    nombreComercial,
+                    razonSocialClie,
+                    totalDet,
+                    importeTotal,
+                    leyendasid,
+                    valueLeyendas,
+                    schemaCode,
+                    invoiceLineDescription,
+                    invioceLineCodigo,
+                    unitCode,
+                    InvoiceLinePorcentaje,
+                    schemeId,
+                    schemaName,
                 }
 
                 console.log(`Preparando solicitud para testcase: ${idTestCase}`)

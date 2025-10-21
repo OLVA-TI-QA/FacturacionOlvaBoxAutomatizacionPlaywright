@@ -1,0 +1,146 @@
+{
+    "createUser": 21,
+    "idTipoComprobante": 37,
+    "serieComprobante": "F471",
+    "idDocCliente": 1293972,
+    "fechaEmision": "2025-09-18",
+    "valorVenta": 820,
+    "valorIgv": 180,
+    "precioVenta": 1000,
+    "idMoneda": 42,
+    "igv": 0.18,
+    "baseImponible": 820,
+    "importeOperacionGravada":10,
+    "collect": 0,
+    "estado": 74,
+    "fechaAnulacion": "",
+    "observacion": "SERVICIOS ADMNISTRATIVOS PRESTAMOS SETIEMBRE 2025",
+    "idOficina": 39,
+    "pc": "DL0082",
+    "efectivo": 2500,
+    "idPersJurArea": 1392173,
+    "flgFacturaElectronica": 1,
+    "flgDivEmi": 1,
+    "glosaDivEmi": "POR SERVICIOS ADMNISTRATIVOS PRESTAMOS A LA CIUDAD \nDE IQUITOS EN EL MES DE SETIEMBRE 2025",
+    "estadoFacE": 931,
+    "idTipoComprobanteFe": 969,
+    "idTipoNota": "",
+    "motivoNota": "",
+    "fechaVencimiento": "2025-09-18",
+    "idTipoAfectacionIgv": 1111,
+    "idFormaPago": 1375,
+    "idVoucher": null,
+    "idEmisorComp": 421448,
+    "idTipoServicio": 1622,
+    "glosa": "",
+    "importeDetraccion": 300,
+    "importePenalidad": "",
+    "observacionVoucher": "",
+    "idTipoCancelacion": 1737,
+    "importeAutodetraccion": 0,
+    "nombreCliente": "OLVA IQUITOS S.A.C.",
+    "direccionCliente": "CAL.PUTUMAYO NRO. 448 P.J. SERAFIN FILOMENO  IQUITOS -  MAYNAS  - LORETO",
+    "montoNetoPago": 820,
+    "idDetraccion": 5109,
+    "comprobante": {
+    "tipoOperacionId": "010111111111111111111111111111111111111111111111111111111",
+    "serie": "F304",
+    "numero": 64668,
+    "issueDate": "2025-09-25",
+    "issueTime": "09:23:15",
+    "invoiceTypeCode": "01",
+    "moneda": "PEN",
+    "signatureID": "IDSignOlva",
+    "ruc": "20100686814",
+    "razonSocial": "OLVA COURIER S.A.C",
+    "nombreComercial": "OLVA COURIER S.A.C",
+    "tipoClie": "6",
+    "rucClie": "10455858343",
+    "razonSocialClie": "PARIONA ARANGOITIA JOSE CARLOS",
+    "digitalSignatureAttachmentExternalReferenceURI": "#SignatureOlva",
+    "taxAmount": "1.83",
+    "totalDet": 2,
+    "valorVentaBruto": "10.18",
+    "precioVenta": "12.02",
+    "importeTotal": "12.02",
+    "formaPago": "Contado",
+    "codigoAnexo": "0000",
+    "leyendas": [
+    {
+        "id": "1000",
+        "value": "DOCE CON 02/100 SOLES."
+    }
+    ],
+    "taxSubTotal": [
+    {
+        "taxableAmount": "10.18",
+        "taxAmount": "1.83",
+        "categoryId": "S",
+        "schemeId": "1000",
+        "schemaName": "IGV",
+        "schemaCode": "VAT"
+    }
+    ],
+    "invoiceLine": [
+    {
+        "id": 1,
+        "unitCode": "ZZ",
+        "cantidad": "1.00",
+        "valorVenta": "5.09",
+        "precioUnitario": "6.009000",
+        "precioUnitCodigo": "01",
+        "valorUnitario": "5.092373",
+        "taxAmount": "0.92",
+        "descripcion": "25/90040592 LIM 1.0 6.009000",
+        "codigo": "REG",
+        "taxSubTotal": [
+        {
+            "taxableAmount": "5.09",
+            "taxAmount": "0.92",
+            "categoryId": "S",
+            "porcentaje": "18.00",
+            "exemptionCode": "10",
+            "schemeId": "1000",
+            "schemaName": "IGV",
+            "schemaCode": "VAT"
+        }
+        ]
+    },
+    {
+        "id": 2,
+        "unitCode": "ZZ",
+        "cantidad": "1.00",
+        "valorVenta": "5.09",
+        "precioUnitario": "6.009000",
+        "precioUnitCodigo": "01",
+        "valorUnitario": "5.092373",
+        "taxAmount": "0.92",
+        "descripcion": "25/90040593 LIM 1.0 6.009000",
+        "codigo": "REG",
+        "taxSubTotal": [
+        {
+            "taxableAmount": "5.09",
+            "taxAmount": "0.92",
+            "categoryId": "S",
+            "porcentaje": "18.00",
+            "exemptionCode": "10",
+            "schemeId": "1000",
+            "schemaName": "IGV",
+            "schemaCode": "VAT"
+        }
+        ]
+    }
+    ]
+},
+    "idMedioPagoDetraccion": 7166,
+    "idTipoOperacionSunat": 7161,
+    "idTipoDetalle": 5,
+"detalle": [
+    {
+    "id": 1
+    },
+    {
+    "id": 2
+    }
+]
+}

@@ -60,7 +60,7 @@ export interface saveComprobanteRequest {
     idTipoComprobanteFe: string | null;
     idTipoNota: string | null;
     motivoNota: string | null;
-    fechaVencimiento: Date;
+    fechaVencimiento: string | null;
     idTipoAfectacionIgv: string | null;
     idFormaPago: string | null;
     idVoucher: string | null;
@@ -80,18 +80,16 @@ export interface saveComprobanteRequest {
     idMedioPagoDetraccion: number | null;
     idTipoOperacionSunat: number | null;
     idTipoDetalle: number | null;
-    detalle: Detalle[] | null;
-}
-
-export interface Comprobante {
-    tipoOperacionId: string | null;
     serie: string | null;
-    numero: number;
-    issueDate: Date;
+    detalle: Detalle[] | null;
+    formaPago: string | null;
+    issueDate: string | null;
+    tipoOperacionId: string | null;
+    signatureID: string | null;
+    numero: number | null;
     issueTime: string | null;
     invoiceTypeCode: string | null;
     moneda: string | null;
-    signatureID: string | null;
     ruc: string | null;
     razonSocial: string | null;
     nombreComercial: string | null;
@@ -100,12 +98,24 @@ export interface Comprobante {
     razonSocialClie: string | null;
     digitalSignatureAttachmentExternalReferenceURI: string | null;
     taxAmount: string | null;
-    totalDet: number;
+    totalDet: string | null;
     valorVentaBruto: string | null;
-    precioVenta: string | null;
     importeTotal: string | null;
-    formaPago: string | null;
     codigoAnexo: string | null;
+    leyendasid:    string | null;
+    valueLeyendas: string | null;
+    schemaCode: string | null;
+    invoiceLineDescription: string | null;
+    unitCode: string | null,
+    InvoiceLinePorcentaje: string | null,
+    schemeId: string | null,
+    schemaName: string | null,
+    invioceLineCodigo: string | null,
+
+}
+
+export interface Comprobante {
+    
 }
 
 export interface Detalle {
