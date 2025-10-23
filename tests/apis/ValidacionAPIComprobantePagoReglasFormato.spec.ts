@@ -22,7 +22,6 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
 
   // Test principal con múltiples envíos
   test('Enviar peticiones con valores no válidos y validar respuestas correctas', async () => {
-    // Aumenta el tiempo de espera a 120 segundos (120000ms)
     test.setTimeout(240000)
 
     // Paso 1: Leer Excel
@@ -43,242 +42,226 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
       const requestsToSendForBatch = batch.map(async (fila: any) => {
         // Ajusta los nombres de las columnas a como estén en tu Excel
         const idTestCase = fila['idTestCase']
-        // Type conversions to match interface requirements
-        const createUser =
-          typeof procesarValorCeldaExcel(fila['createUser']) === 'number' ? (procesarValorCeldaExcel(fila['createUser']) as number) : null
-        const idTipoComprobante =
-          typeof procesarValorCeldaExcel(fila['idTipoComprobante']) === 'string'
-            ? (procesarValorCeldaExcel(fila['idTipoComprobante']) as string)
-            : null
-        const serieComprobante =
-          typeof procesarValorCeldaExcel(fila['serieComprobante']) === 'string' ? (procesarValorCeldaExcel(fila['serieComprobante']) as string) : null
-        const idDocCliente =
-          typeof procesarValorCeldaExcel(fila['idDocCliente']) === 'string' ? (procesarValorCeldaExcel(fila['idDocCliente']) as string) : null
-        const fechaEmision =
-          typeof procesarValorCeldaExcel(fila['fechaEmision']) === 'string' ? (procesarValorCeldaExcel(fila['fechaEmision']) as string) : null
-        const valorVenta =
-          typeof procesarValorCeldaExcel(fila['valorVenta']) === 'string' ? (procesarValorCeldaExcel(fila['valorVenta']) as string) : null
-        const valorIgv = typeof procesarValorCeldaExcel(fila['valorIgv']) === 'string' ? (procesarValorCeldaExcel(fila['valorIgv']) as string) : null
-        const precioVenta =
-          typeof procesarValorCeldaExcel(fila['precioVenta']) === 'string' ? (procesarValorCeldaExcel(fila['precioVenta']) as string) : null
-        const idMoneda = typeof procesarValorCeldaExcel(fila['idMoneda']) === 'string' ? (procesarValorCeldaExcel(fila['idMoneda']) as string) : null
-        const igv = typeof procesarValorCeldaExcel(fila['igv']) === 'string' ? (procesarValorCeldaExcel(fila['igv']) as string) : null
-        const baseImponible =
-          typeof procesarValorCeldaExcel(fila['baseImponible']) === 'string' ? (procesarValorCeldaExcel(fila['baseImponible']) as string) : null
-        const importeOperacionGravada =
-          typeof procesarValorCeldaExcel(fila['importeOperacionGravada']) === 'string'
-            ? (procesarValorCeldaExcel(fila['importeOperacionGravada']) as string)
-            : null
-        const idOficina =
-          typeof procesarValorCeldaExcel(fila['idOficina']) === 'string' ? (procesarValorCeldaExcel(fila['idOficina']) as string) : null
-        const idPersJurArea =
-          typeof procesarValorCeldaExcel(fila['idPersJurArea']) === 'string' ? (procesarValorCeldaExcel(fila['idPersJurArea']) as string) : null
-        const flgFacturaElectronica =
-          typeof procesarValorCeldaExcel(fila['flgFacturaElectronica']) === 'string'
-            ? (procesarValorCeldaExcel(fila['flgFacturaElectronica']) as string)
-            : null
-        const flgDivEmi =
-          typeof procesarValorCeldaExcel(fila['flgDivEmi']) === 'string' ? (procesarValorCeldaExcel(fila['flgDivEmi']) as string) : null
-        const idTipoComprobanteFe =
-          typeof procesarValorCeldaExcel(fila['idTipoComprobanteFe']) === 'string'
-            ? (procesarValorCeldaExcel(fila['idTipoComprobanteFe']) as string)
-            : null
-        const idTipoAfectacionIgv =
-          typeof procesarValorCeldaExcel(fila['idTipoAfectacionIgv']) === 'string'
-            ? (procesarValorCeldaExcel(fila['idTipoAfectacionIgv']) as string)
-            : null
-        const idFormaPago =
-          typeof procesarValorCeldaExcel(fila['idFormaPago']) === 'string' ? (procesarValorCeldaExcel(fila['idFormaPago']) as string) : null
-        const idEmisorComp =
-          typeof procesarValorCeldaExcel(fila['idEmisorComp']) === 'string' ? (procesarValorCeldaExcel(fila['idEmisorComp']) as string) : null
-
-        // Parse complex objects
-        const comprobanteData = procesarValorCeldaExcel(fila['comprobante'])
-        const comprobante: Comprobante | null =
-          comprobanteData && typeof comprobanteData === 'string' ? (JSON.parse(comprobanteData) as Comprobante) : null
-
-        const detalleData = procesarValorCeldaExcel(fila['detalle'])
-        const detalle: Detalle[] | null = detalleData && typeof detalleData === 'string' ? (JSON.parse(detalleData) as Detalle[]) : null
-
-        const statusEsperadoData = procesarValorCeldaExcel(fila['status'])
-        const statusEsperado = typeof statusEsperadoData === 'number' ? statusEsperadoData : parseInt(statusEsperadoData as string) || 0
+        const fechaEmision = fila['fechaEmision']
+        const idPersJurArea = procesarValorCeldaExcel(fila['idPersJurArea'])
+        const idOficina = procesarValorCeldaExcel(fila['idOficina'])
+        const idEmisorComp = procesarValorCeldaExcel(fila['idEmisorComp'])
+        const pc = procesarValorCeldaExcel(fila['pc'])
+        const glosaDivEmi = procesarValorCeldaExcel(fila['glosaDivEmi'])
+        const collect = procesarValorCeldaExcel(fila['collect'])
+        const flgDivEmi = procesarValorCeldaExcel(fila['flgDivEmi'])
+        const flgFacturaElectronica = procesarValorCeldaExcel(fila['flgFacturaElectronica'])
+        const igv = procesarValorCeldaExcel(fila['igv'])
+        const efectivo = procesarValorCeldaExcel(fila['efectivo'])
+        const precioVenta = procesarValorCeldaExcel(fila['precioVenta'])
+        const valorIgv = procesarValorCeldaExcel(fila['valorIgv'])
+        const valorVenta = procesarValorCeldaExcel(fila['valorVenta'])
+        const baseImponible = procesarValorCeldaExcel(fila['baseImponible'])
+        const idTipoComprobante = procesarValorCeldaExcel(fila['idTipoComprobante'])
+        const idDocCliente = procesarValorCeldaExcel(fila['idDocCliente'])
+        const serieComprobante = procesarValorCeldaExcel(fila['serieComprobante'])
+        const moneda = procesarValorCeldaExcel(fila['moneda'])
+        const estadoResumenComp = procesarValorCeldaExcel(fila['estadoResumenComp'])
+        const idTipoServicio = procesarValorCeldaExcel(fila['idTipoServicio'])
+        const estado = procesarValorCeldaExcel(fila['estado'])
+        const estadoFacE = procesarValorCeldaExcel(fila['estadoFacE'])
+        const idFormaPago = procesarValorCeldaExcel(fila['idFormaPago'])
+        const createUser = procesarValorCeldaExcel(fila['createUser'])
+        const createDatetime = procesarValorCeldaExcel(fila['createDatetime'])
+        const comprobanteTipoOperacionId = procesarValorCeldaExcel(fila['comprobanteTipoOperacionId'])
+        const comprobanteSerie = procesarValorCeldaExcel(fila['comprobanteSerie'])
+        const comprobanteIssueDate = procesarValorCeldaExcel(fila['comprobanteIssueDate'])
+        const comprobanteIssueTime = procesarValorCeldaExcel(fila['comprobanteIssueTime'])
+        const comprobanteInvoiceTypeCode = procesarValorCeldaExcel(fila['comprobanteInvoiceTypeCode'])
+        const comprobanteMoneda = procesarValorCeldaExcel(fila['comprobanteMoneda'])
+        const comprobanteSignatureID = procesarValorCeldaExcel(fila['comprobanteSignatureID'])
+        const comprobanteRuc = procesarValorCeldaExcel(fila['comprobanteRuc'])
+        const comprobanteRazonSocial = procesarValorCeldaExcel(fila['comprobanteRazonSocial'])
+        const comprobanteTipoClie = procesarValorCeldaExcel(fila['comprobanteTipoClie'])
+        const comprobanteRucClie = procesarValorCeldaExcel(fila['comprobanteRucClie'])
+        const comprobanteRazonSocialClie = procesarValorCeldaExcel(fila['comprobanteRazonSocialClie'])
+        const comprobanteDigitalSignatureAttachmentExternalReferenceURI = procesarValorCeldaExcel(fila['comprobanteDigitalSignatureAttachmentExternalReferenceURI'])
+        const comprobanteTaxAmount = procesarValorCeldaExcel(fila['comprobanteTaxAmount'])
+        const comprobanteTotalDet = procesarValorCeldaExcel(fila['comprobanteTotalDet'])
+        const comprobanteValorVentaBruto = procesarValorCeldaExcel(fila['comprobanteValorVentaBruto'])
+        const comprobantePrecioVenta = procesarValorCeldaExcel(fila['comprobantePrecioVenta'])
+        const comprobanteImporteTotal = procesarValorCeldaExcel(fila['comprobanteImporteTotal'])
+        const comprobanteFormaPago = procesarValorCeldaExcel(fila['comprobanteFormaPago'])
+        const comprobanteCodigoAnexo = procesarValorCeldaExcel(fila['comprobanteCodigoAnexo'])
+        const comprobanteLeyendasId = procesarValorCeldaExcel(fila['comprobanteLeyendasId'])
+        const comprobanteLeyendasValue = procesarValorCeldaExcel(fila['comprobanteLeyendasValue'])
+        const comprobanteTaxSubTotalTaxableAmount = procesarValorCeldaExcel(fila['comprobanteTaxSubTotalTaxableAmount'])
+        const comprobanteTaxSubTotalTaxAmount = procesarValorCeldaExcel(fila['comprobanteTaxSubTotalTaxAmount'])
+        const comprobanteTaxSubTotalCategoryId = procesarValorCeldaExcel(fila['comprobanteTaxSubTotalCategoryId'])
+        const comprobanteTaxSubTotalPorcentaje = procesarValorCeldaExcel(fila['comprobanteTaxSubTotalPorcentaje'])
+        const comprobanteTaxSubTotalExemptionCode = procesarValorCeldaExcel(fila['comprobanteTaxSubTotalExemptionCode'])
+        const comprobanteTaxSubTotalSchemeId = procesarValorCeldaExcel(fila['comprobanteTaxSubTotalSchemeId'])
+        const comprobanteTaxSubTotalSchemaName = procesarValorCeldaExcel(fila['comprobanteTaxSubTotalSchemaName'])
+        const comprobanteTaxSubTotalSchemaCode = procesarValorCeldaExcel(fila['comprobanteTaxSubTotalSchemaCode'])
+        const comprobanteInvoiceLineId = procesarValorCeldaExcel(fila['comprobanteInvoiceLineId'])
+        const comprobanteInvoiceLineUnitCode = procesarValorCeldaExcel(fila['comprobanteInvoiceLineUnitCode'])
+        const comprobanteInvoiceLineCantidad = procesarValorCeldaExcel(fila['comprobanteInvoiceLineCantidad'])
+        const comprobanteInvoiceLineValorVenta = procesarValorCeldaExcel(fila['comprobanteInvoiceLineValorVenta'])
+        const comprobanteInvoiceLinePrecioUnitario = procesarValorCeldaExcel(fila['comprobanteInvoiceLinePrecioUnitario'])
+        const comprobanteInvoiceLinePrecioUnitCodigo = procesarValorCeldaExcel(fila['comprobanteInvoiceLinePrecioUnitCodigo'])
+        const comprobanteInvoiceLineValorUnitario = procesarValorCeldaExcel(fila['comprobanteInvoiceLineValorUnitario'])
+        const comprobanteInvoiceLineTaxAmount = procesarValorCeldaExcel(fila['comprobanteInvoiceLineTaxAmount'])
+        const comprobanteInvoiceLineDescripcion = procesarValorCeldaExcel(fila['comprobanteInvoiceLineDescripcion'])
+        const comprobanteInvoiceLineCodigo = procesarValorCeldaExcel(fila['comprobanteInvoiceLineCodigo'])
+        const comprobanteInvoiceLineTaxSubTotalTaxableAmount = procesarValorCeldaExcel(fila['comprobanteInvoiceLineTaxSubTotalTaxableAmount'])
+        const comprobanteInvoiceLineTaxSubTotalTaxAmount = procesarValorCeldaExcel(fila['comprobanteInvoiceLineTaxSubTotalTaxAmount'])
+        const comprobanteInvoiceLineTaxSubTotalCategoryId = procesarValorCeldaExcel(fila['comprobanteInvoiceLineTaxSubTotalCategoryId'])
+        const comprobanteInvoiceLineTaxSubTotalPorcentaje = procesarValorCeldaExcel(fila['comprobanteInvoiceLineTaxSubTotalPorcentaje'])
+        const comprobanteInvoiceLineTaxSubTotalExemptionCode = procesarValorCeldaExcel(fila['comprobanteInvoiceLineTaxSubTotalExemptionCode'])
+        const comprobanteInvoiceLineTaxSubTotalSchemeId = procesarValorCeldaExcel(fila['comprobanteInvoiceLineTaxSubTotalSchemeId'])
+        const comprobanteInvoiceLineTaxSubTotalSchemaName = procesarValorCeldaExcel(fila['comprobanteInvoiceLineTaxSubTotalSchemaName'])
+        const comprobanteInvoiceLineTaxSubTotalSchemaCode = procesarValorCeldaExcel(fila['comprobanteInvoiceLineTaxSubTotalSchemaCode'])
+        const comprobanteOrdenCompra = procesarValorCeldaExcel(fila['comprobanteOrdenCompra'])
+        const comprobanteCodigoBienServicioDetraccion = procesarValorCeldaExcel(fila['comprobanteCodigoBienServicioDetraccion'])
+        const comprobanteNumeroCuentaDetraccion = procesarValorCeldaExcel(fila['comprobanteNumeroCuentaDetraccion'])
+        const comprobanteCodigoMedioPagoDetraccion = procesarValorCeldaExcel(fila['comprobanteCodigoMedioPagoDetraccion'])
+        const comprobantePorcentajeDetraccion = procesarValorCeldaExcel(fila['comprobantePorcentajeDetraccion'])
+        const comprobanteImporteDetraccion = procesarValorCeldaExcel(fila['comprobanteImporteDetraccion'])
+        const idMoneda = procesarValorCeldaExcel(fila['idMoneda'])
+        const importeOperacionGravada = procesarValorCeldaExcel(fila['importeOperacionGravada'])
+        const idTipoComprobanteFe = procesarValorCeldaExcel(fila['idTipoComprobanteFe'])
+        const idTipoAfectacionIgv = procesarValorCeldaExcel(fila['idTipoAfectacionIgv'])
+        const importeDetraccion = procesarValorCeldaExcel(fila['importeDetraccion'])
+        const montoNetoPago = procesarValorCeldaExcel(fila['montoNetoPago'])
+        const idDetraccion = procesarValorCeldaExcel(fila['idDetraccion'])
+        const idMedioPagoDetraccion = procesarValorCeldaExcel(fila['idMedioPagoDetraccion'])
+        const idTipoOperacionSunat = procesarValorCeldaExcel(fila['idTipoOperacionSunat'])
+        const detalleId = procesarValorCeldaExcel(fila['detalleId'])
+        const detalleEmision = procesarValorCeldaExcel(fila['detalleEmision'])
+        const detalleRemito = procesarValorCeldaExcel(fila['detalleRemito'])
+        const detalleValorVenta = procesarValorCeldaExcel(fila['detalleValorVenta'])
+        const detalleValorIgv = procesarValorCeldaExcel(fila['detalleValorIgv'])
+        const detallePrecioVenta = procesarValorCeldaExcel(fila['detallePrecioVenta'])
+        const detallePesoKgs = procesarValorCeldaExcel(fila['detallePesoKgs'])
+        const detalleCodSede = procesarValorCeldaExcel(fila['detalleCodSede'])
+        const detalleNombreServicio = procesarValorCeldaExcel(fila['detalleNombreServicio'])
+        const detalleCodigoServicio = procesarValorCeldaExcel(fila['detalleCodigoServicio'])
+        const detalleIdTipoAfectacion = procesarValorCeldaExcel(fila['detalleIdTipoAfectacion'])
+        const detalleValorAfectacion = procesarValorCeldaExcel(fila['detalleValorAfectacion'])
+        const statusEsperado = fila['status']
         const bodyResponseEsperado = fila['bodyResponse']
 
-        const serie = typeof procesarValorCeldaExcel(fila['serie']) === 'string' ? (procesarValorCeldaExcel(fila['serie']) as string) : null
-        const formaPago =
-          typeof procesarValorCeldaExcel(fila['formaPago']) === 'string' ? (procesarValorCeldaExcel(fila['formaPago']) as string) : null
-        const issueDate =
-          typeof procesarValorCeldaExcel(fila['issueDate']) === 'string' ? (procesarValorCeldaExcel(fila['issueDate']) as string) : null
-        const _idTipoNota =
-          typeof procesarValorCeldaExcel(fila['idTipoNota']) === 'string' ? (procesarValorCeldaExcel(fila['idTipoNota']) as string) : null
-        const _motivoNota =
-          typeof procesarValorCeldaExcel(fila['motivoNota']) === 'string' ? (procesarValorCeldaExcel(fila['motivoNota']) as string) : null
-        const fechaVencimiento =
-          typeof procesarValorCeldaExcel(fila['fechaVencimiento']) === 'string' ? (procesarValorCeldaExcel(fila['fechaVencimiento']) as string) : null
-        const importeDetraccionData = procesarValorCeldaExcel(fila['importeDetraccion'])
-        const _importeDetraccion =
-          typeof importeDetraccionData === 'number'
-            ? importeDetraccionData
-            : typeof importeDetraccionData === 'string'
-              ? parseFloat(importeDetraccionData) || null
-              : null
-
-        const montoNetoPagoData = procesarValorCeldaExcel(fila['montoNetoPago'])
-        const _montoNetoPago =
-          typeof montoNetoPagoData === 'number'
-            ? montoNetoPagoData
-            : typeof montoNetoPagoData === 'string'
-              ? parseFloat(montoNetoPagoData) || null
-              : null
-
-        const idDetraccionData = procesarValorCeldaExcel(fila['idDetraccion'])
-        const _idDetraccion =
-          typeof idDetraccionData === 'number' ? idDetraccionData : typeof idDetraccionData === 'string' ? parseInt(idDetraccionData) || null : null
-
-        const idMedioPagoDetraccionData = procesarValorCeldaExcel(fila['idMedioPagoDetraccion'])
-        const _idMedioPagoDetraccion =
-          typeof idMedioPagoDetraccionData === 'number'
-            ? idMedioPagoDetraccionData
-            : typeof idMedioPagoDetraccionData === 'string'
-              ? parseInt(idMedioPagoDetraccionData) || null
-              : null
-        const tipoOperacionId =
-          typeof procesarValorCeldaExcel(fila['tipoOperacionId']) === 'string' ? (procesarValorCeldaExcel(fila['tipoOperacionId']) as string) : null
-        const signatureID =
-          typeof procesarValorCeldaExcel(fila['signatureID']) === 'string' ? (procesarValorCeldaExcel(fila['signatureID']) as string) : null
-        const ruc = typeof procesarValorCeldaExcel(fila['ruc']) === 'string' ? (procesarValorCeldaExcel(fila['ruc']) as string) : null
-
-        const razonSocial =
-          typeof procesarValorCeldaExcel(fila['razonSocial']) === 'string' ? (procesarValorCeldaExcel(fila['razonSocial']) as string) : null
-        const nombreComercial =
-          typeof procesarValorCeldaExcel(fila['nombreComercial']) === 'string' ? (procesarValorCeldaExcel(fila['nombreComercial']) as string) : null
-        const razonSocialClie =
-          typeof procesarValorCeldaExcel(fila['razonSocialClie']) === 'string' ? (procesarValorCeldaExcel(fila['razonSocialClie']) as string) : null
-        const totalDet = typeof procesarValorCeldaExcel(fila['totalDet']) === 'string' ? (procesarValorCeldaExcel(fila['totalDet']) as string) : null
-
-        const importeTotal =
-          typeof procesarValorCeldaExcel(fila['importeTotal']) === 'string' ? (procesarValorCeldaExcel(fila['importeTotal']) as string) : null
-        const leyendasid =
-          typeof procesarValorCeldaExcel(fila['leyendasid']) === 'string' ? (procesarValorCeldaExcel(fila['leyendasid']) as string) : null
-        const valueLeyendas =
-          typeof procesarValorCeldaExcel(fila['valueLeyendas']) === 'string' ? (procesarValorCeldaExcel(fila['valueLeyendas']) as string) : null
-        const schemaCode =
-          typeof procesarValorCeldaExcel(fila['schemaCode']) === 'string' ? (procesarValorCeldaExcel(fila['schemaCode']) as string) : null
-
-        const invoiceLineDescription =
-          typeof procesarValorCeldaExcel(fila['invoiceLineDescription']) === 'string'
-            ? (procesarValorCeldaExcel(fila['invoiceLineDescription']) as string)
-            : null
-        const invioceLineCodigo =
-          typeof procesarValorCeldaExcel(fila['invioceLineCodigo']) === 'string'
-            ? (procesarValorCeldaExcel(fila['invioceLineCodigo']) as string)
-            : null
-        const unitCode = typeof procesarValorCeldaExcel(fila['unitCode']) === 'string' ? (procesarValorCeldaExcel(fila['unitCode']) as string) : null
-        const InvoiceLinePorcentaje =
-          typeof procesarValorCeldaExcel(fila['InvoiceLinePorcentaje']) === 'string'
-            ? (procesarValorCeldaExcel(fila['InvoiceLinePorcentaje']) as string)
-            : null
-
-        const schemeId = typeof procesarValorCeldaExcel(fila['schemeId']) === 'string' ? (procesarValorCeldaExcel(fila['schemeId']) as string) : null
-        const schemaName =
-          typeof procesarValorCeldaExcel(fila['schemaName']) === 'string' ? (procesarValorCeldaExcel(fila['schemaName']) as string) : null
-        const _idTipoOperacionSunat =
-          typeof procesarValorCeldaExcel(fila['idTipoOperacionSunat']) === 'string'
-            ? (procesarValorCeldaExcel(fila['idTipoOperacionSunat']) as string)
-            : null
-        const _observacion =
-          typeof procesarValorCeldaExcel(fila['observacion']) === 'string' ? (procesarValorCeldaExcel(fila['observacion']) as string) : null
-
-        // Campos adicionales requeridos por la interfaz
-        const numeroData = procesarValorCeldaExcel(fila['numero'])
-        const numero = typeof numeroData === 'number' ? numeroData : typeof numeroData === 'string' ? parseInt(numeroData) || null : null
-
-        const issueTime =
-          typeof procesarValorCeldaExcel(fila['issueTime']) === 'string' ? (procesarValorCeldaExcel(fila['issueTime']) as string) : null
-
-        const invoiceTypeCode =
-          typeof procesarValorCeldaExcel(fila['invoiceTypeCode']) === 'string' ? (procesarValorCeldaExcel(fila['invoiceTypeCode']) as string) : null
-
-        const moneda = typeof procesarValorCeldaExcel(fila['moneda']) === 'string' ? (procesarValorCeldaExcel(fila['moneda']) as string) : null
-
-        // Usar las variables con prefijo _ para los campos que ya están definidos
-        const idTipoNota = _idTipoNota
-        const motivoNota = _motivoNota
-        const importeDetraccion = _importeDetraccion
-        const montoNetoPago = _montoNetoPago
-        const idDetraccion = _idDetraccion
-        const idMedioPagoDetraccion = _idMedioPagoDetraccion
-        const idTipoOperacionSunat = _idTipoOperacionSunat
 
         const body: saveComprobanteRequest = {
-          createUser,
-          idTipoComprobante,
-          serieComprobante,
-          idDocCliente,
           fechaEmision,
-          valorVenta,
-          valorIgv,
-          precioVenta,
-          idMoneda,
-          igv,
-          baseImponible,
-          importeOperacionGravada,
-          collect: null,
-          estado: null,
-          fechaAnulacion: null,
-          observacion: _observacion,
-          idOficina,
-          pc: null,
-          efectivo: null,
           idPersJurArea,
-          flgFacturaElectronica,
+          idOficina,
+          idEmisorComp,
+          pc,
+          glosaDivEmi,
+          collect,
           flgDivEmi,
-          glosaDivEmi: null,
-          estadoFacE: null,
+          flgFacturaElectronica,
+          igv,
+          efectivo,
+          precioVenta,
+          valorIgv,
+          valorVenta,
+          baseImponible,
+          idTipoComprobante,
+          idDocCliente,
+          serieComprobante,
+          moneda,
+          estadoResumenComp,
+          idTipoServicio,
+          estado,
+          estadoFacE,
+          idFormaPago,
+          createUser,
+          createDatetime,
+          comprobante: {
+            tipoOperacionId: comprobanteTipoOperacionId,
+            serie: comprobanteSerie,
+            issueDate: comprobanteIssueDate,
+            issueTime: comprobanteIssueTime,
+            invoiceTypeCode: comprobanteInvoiceTypeCode,
+            moneda: comprobanteMoneda,
+            signatureID: comprobanteSignatureID,
+            ruc: comprobanteRuc,
+            razonSocial: comprobanteRazonSocial,
+            tipoClie: comprobanteTipoClie,
+            rucClie: comprobanteRucClie,
+            razonSocialClie: comprobanteRazonSocialClie,
+            digitalSignatureAttachmentExternalReferenceURI: comprobanteDigitalSignatureAttachmentExternalReferenceURI,
+            taxAmount: comprobanteTaxAmount,
+            totalDet: comprobanteTotalDet,
+            valorVentaBruto: comprobanteValorVentaBruto,
+            precioVenta: comprobantePrecioVenta,
+            importeTotal: comprobanteImporteTotal,
+            formaPago: comprobanteFormaPago,
+            codigoAnexo: comprobanteCodigoAnexo,
+            leyendas: [{
+              id: comprobanteLeyendasId,
+              value: comprobanteLeyendasValue
+            }],
+            taxSubTotal: [{
+              taxableAmount: comprobanteTaxSubTotalTaxableAmount,
+              taxAmount: comprobanteTaxSubTotalTaxAmount,
+              categoryId: comprobanteTaxSubTotalCategoryId,
+              porcentaje: comprobanteTaxSubTotalPorcentaje,
+              exemptionCode: comprobanteTaxSubTotalExemptionCode,
+              schemeId: comprobanteTaxSubTotalSchemeId,
+              schemaName: comprobanteTaxSubTotalSchemaName,
+              schemaCode: comprobanteTaxSubTotalSchemaCode
+            }],
+            invoiceLine: [{
+              id: comprobanteInvoiceLineId,
+              unitCode: comprobanteInvoiceLineUnitCode,
+              cantidad: comprobanteInvoiceLineCantidad,
+              valorVenta: comprobanteInvoiceLineValorVenta,
+              precioUnitario: comprobanteInvoiceLinePrecioUnitario,
+              precioUnitCodigo: comprobanteInvoiceLinePrecioUnitCodigo,
+              valorUnitario: comprobanteInvoiceLineValorUnitario,
+              taxAmount: comprobanteInvoiceLineTaxAmount,
+              descripcion: comprobanteInvoiceLineDescripcion,
+              codigo: comprobanteInvoiceLineCodigo,
+              taxSubTotal: [{
+                taxableAmount: comprobanteInvoiceLineTaxSubTotalTaxableAmount,
+                taxAmount: comprobanteInvoiceLineTaxSubTotalTaxAmount,
+                categoryId: comprobanteInvoiceLineTaxSubTotalCategoryId,
+                porcentaje: comprobanteInvoiceLineTaxSubTotalPorcentaje,
+                exemptionCode: comprobanteInvoiceLineTaxSubTotalExemptionCode,
+                schemeId: comprobanteInvoiceLineTaxSubTotalSchemeId,
+                schemaName: comprobanteInvoiceLineTaxSubTotalSchemaName,
+                schemaCode: comprobanteInvoiceLineTaxSubTotalSchemaCode
+              }]
+            }],
+            codigoBienServicioDetraccion: comprobanteCodigoBienServicioDetraccion,
+            numeroCuentaDetraccion: comprobanteNumeroCuentaDetraccion,
+            codigoMedioPagoDetraccion: comprobanteCodigoMedioPagoDetraccion,
+            porcentajeDetraccion: comprobantePorcentajeDetraccion,
+            importeDetraccion: comprobanteImporteDetraccion
+          },
+          idMoneda,
+          importeOperacionGravada,
+          observacion: null,
           idTipoComprobanteFe,
           idTipoNota: null,
           motivoNota: null,
-          fechaVencimiento,
+          fechaVencimiento: null,
           idTipoAfectacionIgv,
-          idFormaPago,
-          idVoucher: null,
-          idEmisorComp,
-          idTipoServicio: null,
-          glosa: null,
-          importeDetraccion: null,
-          importePenalidad: null,
-          observacionVoucher: null,
-          idTipoCancelacion: null,
-          importeAutodetraccion: null,
-          nombreCliente: null,
-          direccionCliente: null,
-          montoNetoPago: null,
-          idDetraccion: null,
-          comprobante,
-          idMedioPagoDetraccion: null,
-          idTipoOperacionSunat: null,
-          idTipoDetalle: null,
-          detalle,
-          serie,
-          formaPago,
-          issueDate,
-          tipoOperacionId,
-          signatureID,
-          ruc,
-          razonSocial,
-          nombreComercial,
-          razonSocialClie,
-          totalDet,
-          importeTotal,
-          leyendasid,
-          valueLeyendas,
-          schemaCode,
-          invoiceLineDescription,
-          invioceLineCodigo,
-          unitCode,
-          InvoiceLinePorcentaje,
-          schemeId,
-          schemaName
+          idDetraccion,
+          idMedioPagoDetraccion,
+          idTipoOperacionSunat,
+          detalle: [{
+            id: detalleId,
+            emision: detalleEmision,
+            remito: detalleRemito,
+            valorVenta: detalleValorVenta,
+            valorIgv: detalleValorIgv,
+            precioVenta: detallePrecioVenta,
+            pesoKgs: detallePesoKgs,
+            codSede: detalleCodSede,
+            nombreServicio: detalleNombreServicio,
+            codigoServicio: detalleCodigoServicio,
+            idTipoAfectacion: detalleIdTipoAfectacion,
+            valorAfectacion: detalleValorAfectacion
+          }]
         }
 
         console.log(`Preparando solicitud para testcase: ${idTestCase}`)
@@ -357,7 +340,7 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
               mensajeErrorObtenido = bodyResponse.message
               break
             default:
-              if (normalizeForComparison(bodyResponse) === normalizeForComparison(JSON.parse(bodyResponseEsperado))) {
+              if (normalizeForComparison(bodyResponse) === normalizeForComparison(bodyResponseEsperado)) {
                 bodyResponseEsperadoCorrecto = true
               } else {
                 bodyResponseEsperadoCorrecto = false
