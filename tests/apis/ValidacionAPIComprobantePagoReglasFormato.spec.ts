@@ -85,6 +85,7 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
         const comprobanteTotalDet = procesarValorCeldaExcel(fila['comprobanteTotalDet'])
         const comprobanteValorVentaBruto = procesarValorCeldaExcel(fila['comprobanteValorVentaBruto'])
         const comprobantePrecioVenta = procesarValorCeldaExcel(fila['comprobantePrecioVenta'])
+        const comprobantePrecioUnitCodigo = procesarValorCeldaExcel(fila['comprobantePrecioUnitCodigo'])
         const comprobanteImporteTotal = procesarValorCeldaExcel(fila['comprobanteImporteTotal'])
         const comprobanteFormaPago = procesarValorCeldaExcel(fila['comprobanteFormaPago'])
         const comprobanteCodigoAnexo = procesarValorCeldaExcel(fila['comprobanteCodigoAnexo'])
@@ -99,6 +100,7 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
         const comprobanteTaxSubTotalSchemaName = procesarValorCeldaExcel(fila['comprobanteTaxSubTotalSchemaName'])
         const comprobanteTaxSubTotalSchemaCode = procesarValorCeldaExcel(fila['comprobanteTaxSubTotalSchemaCode'])
         const comprobanteInvoiceLineId = procesarValorCeldaExcel(fila['comprobanteInvoiceLineId'])
+        const comprobanteInvoiceLineUnitCodigo = procesarValorCeldaExcel(fila['comprobanteInvoiceLineUnitCodigo'])
         const comprobanteInvoiceLineUnitCode = procesarValorCeldaExcel(fila['comprobanteInvoiceLineUnitCode'])
         const comprobanteInvoiceLineCantidad = procesarValorCeldaExcel(fila['comprobanteInvoiceLineCantidad'])
         const comprobanteInvoiceLineValorVenta = procesarValorCeldaExcel(fila['comprobanteInvoiceLineValorVenta'])
@@ -148,6 +150,7 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
 
 
         const body: saveComprobanteRequest = {
+          comprobantePrecioUnitCodigo,
           fechaEmision,
           idPersJurArea,
           idOficina,
@@ -263,6 +266,9 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
             valorAfectacion: detalleValorAfectacion
           }]
         }
+
+        // const body: Comprobante = {}
+        // const body: Detalle = {}
 
         console.log(`Preparando solicitud para testcase: ${idTestCase}`)
 

@@ -82,6 +82,7 @@ export interface saveComprobanteRequest {
     idMedioPagoDetraccion?: number | string | null;
     idTipoOperacionSunat?: number | string | null;
     detalle?: Detalle[] | null;
+    comprobantePrecioUnitCodigo? : number | string | null;
 }
 
 export interface Comprobante {
