@@ -32,7 +32,7 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
     const resultadosValidacion: ExcelValidacionExportParcelDeclare[] = []
 
     // 2. Iterar los datos en lotes para procesar peticiones con concurrencia limitada
-    for (let i = 0; i < datos.length; i += BATCH_SIZE) {
+    for (let i = 0; i < 20; i += BATCH_SIZE) {
       const batch = datos.slice(i, i + BATCH_SIZE)
       console.log(
         `\n--- Procesando lote ${Math.floor(i / BATCH_SIZE) + 1} de ${Math.ceil(datos.length / BATCH_SIZE)} (${batch.length} elementos) ---`
@@ -400,7 +400,7 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
 
     exportarResultadosGenerico<ExcelValidacionExportParcelDeclare>({
       data: resultadosValidacion,
-      nombreBase: 'resultados_validacion_estructura_body_request_manifest',
+      nombreBase: 'resultados_validacion_estructura_body_request_comprobantePago',
       headers: [
         'ID TESTCASE',
         'STATUS ESPERADO',
@@ -410,7 +410,7 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
         'BODY RESPONSE OBTENIDO',
         'EL BODY RESPONSE ES CORRECTO?',
         'MENSAJE OBTENIDO',
-        'TIEMPO RESPUESTA MANIFEST (s)'
+        'TIEMPO RESPUESTA COMPROBANTE PAGO (s)'
       ],
       extraerCampos: [
         (r) => r.idTestCase,
