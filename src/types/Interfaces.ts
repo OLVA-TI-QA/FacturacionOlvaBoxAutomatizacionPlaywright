@@ -107,6 +107,7 @@ export interface Comprobante {
     totalDet?: number | string | null;
     valorVentaBruto?: string | null;
     precioVenta?: string | null;
+    valorVenta?: string | null;
     totalDescuento?: null;
     importeTotal?: string | null;
     otrosCargos?: null;

@@ -105,7 +105,7 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
         const comprobanteInvoiceLineCantidad = procesarValorCeldaExcel(fila['comprobanteInvoiceLineCantidad'])
         const comprobanteInvoiceLineValorVenta = procesarValorCeldaExcel(fila['comprobanteInvoiceLineValorVenta'])
         const comprobanteInvoiceLinePrecioUnitario = procesarValorCeldaExcel(fila['comprobanteInvoiceLinePrecioUnitario'])
-        const comprobanteInvoiceLinePrecioUnitCodigo = procesarValorCeldaExcel(fila['comprobanteInvoiceLinePrecioUnitCodigo'])
+        const comprobanteInvoiceLinePrecioUnitCodigo = procesarValorCeldaExcel(fila['comprobanteInvoiceLinePrecioUnitCodigo']) 
         const comprobanteInvoiceLineValorUnitario = procesarValorCeldaExcel(fila['comprobanteInvoiceLineValorUnitario'])
         const comprobanteInvoiceLineTaxAmount = procesarValorCeldaExcel(fila['comprobanteInvoiceLineTaxAmount'])
         const comprobanteInvoiceLineDescripcion = procesarValorCeldaExcel(fila['comprobanteInvoiceLineDescripcion'])
@@ -118,12 +118,13 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
         const comprobanteInvoiceLineTaxSubTotalSchemeId = procesarValorCeldaExcel(fila['comprobanteInvoiceLineTaxSubTotalSchemeId'])
         const comprobanteInvoiceLineTaxSubTotalSchemaName = procesarValorCeldaExcel(fila['comprobanteInvoiceLineTaxSubTotalSchemaName'])
         const comprobanteInvoiceLineTaxSubTotalSchemaCode = procesarValorCeldaExcel(fila['comprobanteInvoiceLineTaxSubTotalSchemaCode'])
+        const comprobanteValorVenta = procesarValorCeldaExcel(fila['comprobanteValorVenta'])
         const comprobanteOrdenCompra = procesarValorCeldaExcel(fila['comprobanteOrdenCompra'])
         const comprobanteCodigoBienServicioDetraccion = procesarValorCeldaExcel(fila['comprobanteCodigoBienServicioDetraccion'])
         const comprobanteNumeroCuentaDetraccion = procesarValorCeldaExcel(fila['comprobanteNumeroCuentaDetraccion'])
         const comprobanteCodigoMedioPagoDetraccion = procesarValorCeldaExcel(fila['comprobanteCodigoMedioPagoDetraccion'])
         const comprobantePorcentajeDetraccion = procesarValorCeldaExcel(fila['comprobantePorcentajeDetraccion'])
-        const comprobanteImporteDetraccion = procesarValorCeldaExcel(fila['comprobanteImporteDetraccion'])
+        const comprobanteImporteDetraccion = procesarValorCeldaExcel(fila['comprobanteImporteDetraccion'])  //agregar columna
         const idMoneda = procesarValorCeldaExcel(fila['idMoneda'])
         const importeOperacionGravada = procesarValorCeldaExcel(fila['importeOperacionGravada'])
         const idTipoComprobanteFe = procesarValorCeldaExcel(fila['idTipoComprobanteFe'])
@@ -196,6 +197,7 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
             valorVentaBruto: comprobanteValorVentaBruto,
             precioVenta: comprobantePrecioVenta,
             importeTotal: comprobanteImporteTotal,
+            valorVenta: comprobanteValorVenta,
             formaPago: comprobanteFormaPago,
             codigoAnexo: comprobanteCodigoAnexo,
             leyendas: [{
