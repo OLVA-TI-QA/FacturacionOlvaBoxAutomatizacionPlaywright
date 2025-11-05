@@ -29,7 +29,7 @@ export interface ExcelValidacionExportParcelDeclare {
     bodyResponseObtenido: string
     bodyResponseEsperadoCorrecto: boolean
     mensajeErrorObtenido: string
-    tiempoRespuestaParcel?: number // Tiempo en segundos
+    tiempoRespuestaRequest?: number // Tiempo en segundos
 }
 
 export interface saveComprobanteRequest {
@@ -82,7 +82,7 @@ export interface saveComprobanteRequest {
     idMedioPagoDetraccion?: number | string | null;
     idTipoOperacionSunat?: number | string | null;
     detalle?: Detalle[] | null;
-    comprobantePrecioUnitCodigo? : number | string | null;
+    comprobantePrecioUnitCodigo?: number | string | null;
 }
 
 export interface Comprobante {

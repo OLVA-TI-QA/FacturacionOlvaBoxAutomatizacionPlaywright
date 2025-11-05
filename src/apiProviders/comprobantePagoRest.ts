@@ -4,7 +4,7 @@ import path from 'path'
 
 // Load environment variables
 config({ path: path.resolve(process.cwd(), '.env') })
-import {saveComprobanteRequest} from '@/types/Interfaces'
+import { saveComprobanteRequest } from '@/types/Interfaces'
 
 export class ComprobantePagoRest {
     private baseUrl?: APIRequestContext
@@ -20,8 +20,7 @@ export class ComprobantePagoRest {
         return this
     }
 
-
-    public async postComprobantePago(bodyRequest:saveComprobanteRequest) {
+    public async postComprobantePago(bodyRequest: saveComprobanteRequest) {
 
         const getResponse = await this.baseUrl!.post('/api/v1/comprobante-pago', {
             data: bodyRequest
