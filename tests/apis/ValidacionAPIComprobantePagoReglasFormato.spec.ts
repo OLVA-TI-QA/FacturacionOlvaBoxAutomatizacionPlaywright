@@ -32,7 +32,7 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
     const resultadosValidacion: ExcelValidacionExportParcelDeclare[] = []
 
     // 2. Iterar los datos en lotes para procesar peticiones con concurrencia limitada
-    for (let i = 0; i < 20; i += BATCH_SIZE) {
+    for (let i = 0; i < 120; i += BATCH_SIZE) {
       const batch = datos.slice(i, i + BATCH_SIZE)
       console.log(
         `\n--- Procesando lote ${Math.floor(i / BATCH_SIZE) + 1} de ${Math.ceil(datos.length / BATCH_SIZE)} (${batch.length} elementos) ---`
@@ -146,6 +146,8 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
         const detalleCodigoServicio = procesarValorCeldaExcel(fila['detalleCodigoServicio'])
         const detalleIdTipoAfectacion = procesarValorCeldaExcel(fila['detalleIdTipoAfectacion'])
         const detalleValorAfectacion = procesarValorCeldaExcel(fila['detalleValorAfectacion'])
+        const observacion = procesarValorCeldaExcel(fila['observacion'])
+        const fechaVencimiento = procesarValorCeldaExcel(fila['fechaVencimiento'])
         const statusEsperado = fila['status']
         const bodyResponseEsperado = fila['bodyResponse']
 
@@ -244,11 +246,11 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
           },
           idMoneda,
           importeOperacionGravada,
-          observacion: null,
+          observacion,
           idTipoComprobanteFe,
           idTipoNota: null,
           motivoNota: null,
-          fechaVencimiento: null,
+          fechaVencimiento,
           idTipoAfectacionIgv,
           idDetraccion,
           idMedioPagoDetraccion,
@@ -336,27 +338,14 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
 
         if (statusObtenido === statusEsperado) {
           statusCorrecto = true
-          //Uso de switch case para la conversión
-          switch (statusObtenido) {
-            case 201:
-              if (normalizeForComparison(bodyResponse) === normalizeForComparison(JSON.parse(bodyResponseEsperado))) {
-                bodyResponseEsperadoCorrecto = true
-              } else {
-                bodyResponseEsperadoCorrecto = false
-              }
 
-              mensajeErrorObtenido = bodyResponse.message
-              break
-            default:
-              if (normalizeForComparison(bodyResponse) === normalizeForComparison(bodyResponseEsperado)) {
-                bodyResponseEsperadoCorrecto = true
-              } else {
-                bodyResponseEsperadoCorrecto = false
-              }
-
-              mensajeErrorObtenido = bodyResponse.message
-              break
+          if (normalizeForComparison(bodyResponse) === normalizeForComparison(bodyResponseEsperado)) {
+            bodyResponseEsperadoCorrecto = true
+          } else {
+            bodyResponseEsperadoCorrecto = false
           }
+
+          mensajeErrorObtenido = bodyResponse.message
         } else {
           // Si el status no es 201, asumimos que hay un error
           statusCorrecto = false
@@ -388,16 +377,13 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
     const bodyResponseEsperadoCorrecto = resultadosValidacion.filter((item) => item.bodyResponseEsperadoCorrecto === true).length
     const bodyResponseEsperadoInCorrecto = totalRegistros - bodyResponseEsperadoCorrecto
     const status400Obtenidos = resultadosValidacion.filter((item) => item.statusObtenido === 400).length
-    const status201Obtenidos = totalRegistros - status400Obtenidos
     const status400Esperados = resultadosValidacion.filter((item) => item.statusEsperado === 400).length
-    const status201Esperados = totalRegistros - status400Esperados
 
     console.log('---')
     console.log(`📊 Resumen de la prueba:`)
     console.log(`- ${totalRegistros} registros procesados.`)
     console.log(`- ${bodyResponseEsperadoInCorrecto} body response con error (error: false).`)
     console.log(`- ${status400Obtenidos} status 400 obtenidos.`)
-    console.log(`- ${status201Obtenidos} status 201 obtenidos.`)
     console.log('---')
 
     exportarResultadosGenerico<ExcelValidacionExportParcelDeclare>({
@@ -429,7 +415,6 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
 
     // expect(totalRegistros).toBe(bodyResponseEsperadoCorrecto) // Validación de la cantidad de request enviados comparados entre su body response
     expect(status400Obtenidos).toBe(status400Esperados) // Validación de la cantidad de status 400 comparados entre los esperados y obtenidos
-    expect(status201Obtenidos).toBe(status201Esperados) // Validación de la cantidad de status 201 comparados entre los esperados y obtenidos
     expect(totalRegistros).toBe(bodyResponseEsperadoCorrecto) // Validación de la cantidad de status 422 comparados entre los esperados y obtenidos
   })
 })

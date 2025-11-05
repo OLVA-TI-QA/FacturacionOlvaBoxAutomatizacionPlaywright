@@ -62,11 +62,11 @@ export interface saveComprobanteRequest {
     comprobante?: Comprobante | null;
     idMoneda?: number | string | null;
     importeOperacionGravada?: number | string | null;
-    observacion?: null;
+    observacion?: number | string | null;
     idTipoComprobanteFe?: number | string | null;
     idTipoNota?: null;
     motivoNota?: null;
-    fechaVencimiento?: null;
+    fechaVencimiento?: number | string | null;
     idTipoAfectacionIgv?: number | string | null;
     idVoucher?: null;
     glosa?: null;
