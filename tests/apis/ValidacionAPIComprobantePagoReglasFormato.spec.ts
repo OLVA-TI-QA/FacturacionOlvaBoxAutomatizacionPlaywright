@@ -384,7 +384,7 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
       if (statusObtenido === statusEsperado) {
         statusCorrecto = true
 
-        if (JSON.stringify(bodyResponse) === normalizeForComparison(bodyResponseEsperado)) {
+        if (normalizeForComparison(JSON.stringify(bodyResponse)) === normalizeForComparison(bodyResponseEsperado)) {
           bodyResponseEsperadoCorrecto = true
         } else {
           bodyResponseEsperadoCorrecto = false
