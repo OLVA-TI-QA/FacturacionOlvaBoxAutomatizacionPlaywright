@@ -87,7 +87,7 @@ test.describe('Pruebas de la API de Comprobante Pago con Excel', () => {
       const fila: any = datos[i]
       console.log(`\n--- Procesando la fila ${i} de (${datos.length} elementos) ---`)
 
-      const idTestCase = fila['idTestCase']
+      const idTestCase = fila['idTestCase'].toString()
       const fechaEmision = fila['fechaEmision']
       const idPersJurArea = procesarValorCeldaExcel(fila['idPersJurArea'])
       const idOficina = procesarValorCeldaExcel(fila['idOficina'])
